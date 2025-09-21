@@ -1,0 +1,21 @@
+{
+  "sdk_name": "Softan Connect SDK",
+  "sdk_version": "0.0.1",
+  "sdk_type": "python",
+  "sdk_author": "Softan Soluciones",
+  "default_environment": "stg",
+  "base_urls": {
+    "stg": "https://connect-stg.softansoluciones.com/public",
+    "prod": "https://connect.softansoluciones.com/public"
+  },
+  "endpoints": {
+    "tokens": {
+      "create": "tokens",
+      "status": "tokens/status"
+    },
+    "otp": {
+      "create": "otp",
+      "validate": "otp/validate"
+    }
+  }
+}

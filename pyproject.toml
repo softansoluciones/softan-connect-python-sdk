@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "softan-connect"
+version = "0.0.1"
+description = "Softan Connect SDK for Python (tokens and OTP integration)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Proprietary" }
+authors = [
+  { name = "Softan Soluciones" }
+]
+dependencies = [
+  "requests>=2.32",
+]
+keywords = ["softan", "connect", "sdk", "tokens", "otp"]
+
+[project.urls]
+Homepage = "https://softansol.com"
+
+[project.scripts]
+softan-connect-install = "softan_connect.install:install_sdk"
+softan-connect-add-env = "softan_connect.add_env:main"
+softan-connect-switch-env = "softan_connect.switch_env:main"
+
+[tool.setuptools]
+packages = ["softan_connect"]
+
+[tool.setuptools.package-dir]
+softan_connect = "."
+
+[tool.setuptools.package-data]
+softan_connect = ["sdk_meta.json"]
+
