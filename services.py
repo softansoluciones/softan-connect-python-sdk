@@ -1,11 +1,11 @@
 from typing import Optional, Dict, Any
 try:
-    from .client import make_request
-    from .headers import build_runtime_headers
+    from . import client as client_module
+    from . import headers as headers_module
     from .sdk import SDK_META
 except ImportError:
-    from client import make_request
-    from headers import build_runtime_headers
+    import client as client_module
+    import headers as headers_module
     from sdk import SDK_META
 
 
@@ -35,8 +35,8 @@ def request_token(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None
     """POST /public/tokens (crear token)"""
     _require(data, "user_id", int)
     endpoint = _get_endpoint("tokens", "create")
-    headers = headers or build_runtime_headers()
-    return make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
+    headers = headers or headers_module.build_runtime_headers()
+    return client_module.make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
 
 
 def token_status(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None, verify: bool = True):
@@ -44,16 +44,16 @@ def token_status(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None,
     _require(data, "token", str)
     _require(data, "user_id", int)
     endpoint = _get_endpoint("tokens", "status")
-    headers = headers or build_runtime_headers()
-    return make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
+    headers = headers or headers_module.build_runtime_headers()
+    return client_module.make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
 
 
 def request_otp(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None, verify: bool = True):
     """POST /public/otp (generar/enviar OTP)"""
     _require(data, "user_id", int)
     endpoint = _get_endpoint("otp", "create")
-    headers = headers or build_runtime_headers()
-    return make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
+    headers = headers or headers_module.build_runtime_headers()
+    return client_module.make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
 
 
 def validate_otp(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None, verify: bool = True):
@@ -61,5 +61,6 @@ def validate_otp(data: Dict[str, Any], headers: Optional[Dict[str, str]] = None,
     _require(data, "otp_code", int)
     _require(data, "user_id", int)
     endpoint = _get_endpoint("otp", "validate")
-    headers = headers or build_runtime_headers()
-    return make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
+    headers = headers or headers_module.build_runtime_headers()
+    return client_module.make_request(endpoint=endpoint, method="POST", headers=headers, data=data, verify=verify)
+
