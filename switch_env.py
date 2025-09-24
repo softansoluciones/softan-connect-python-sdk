@@ -10,11 +10,11 @@ except ImportError:
 def main():
     print("\n?? Cambiar entorno activo del SDK")
 
-    if not os.path.exists(SDK_CONFIG_PATH):
-        print("? No se encontró el archivo de configuración del SDK.")
+    if not SDK_CONFIG_PATH.exists():
+        print("? No se encontro el archivo de configuracion del SDK.")
         return
 
-    with open(SDK_CONFIG_PATH, "r", encoding="utf-8") as f:
+    with SDK_CONFIG_PATH.open("r", encoding="utf-8") as f:
         config = json.load(f)
 
     environments = config.get("environments", {})
@@ -32,10 +32,11 @@ def main():
 
     if len(env_names) == 2 and active in env_names:
         other = [e for e in env_names if e != active][0]
-        opt = input(f"?? El entorno activo es '{active}'. ¿Cambiar a '{other}'? (s/n): ").strip().lower()
-        if opt in ("s", "si", "sí", "y", "yes"):
+        opt = input(f"?? El entorno activo es '{active}'. Cambiar a '{other}'? (s/n): ").strip().lower()
+        if opt in ("s", "si", "y", "yes"):
             config["active_environment"] = other
-            with open(SDK_CONFIG_PATH, "w", encoding="utf-8") as f:
+            SDK_CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with SDK_CONFIG_PATH.open("w", encoding="utf-8") as f:
                 json.dump(config, f, indent=2)
             print(f"\n? Entorno activo cambiado a: {other}")
         else:
@@ -48,10 +49,10 @@ def main():
         print(f"  {idx}. {name}{marker}")
 
     try:
-        choice = int(input("\n?? Elige un entorno (número): ").strip())
+        choice = int(input("\n?? Elige un entorno (numero): ").strip())
         selected_env = env_names[choice - 1]
     except (ValueError, IndexError):
-        print("? Selección inválida.")
+        print("? Seleccion invalida.")
         return
 
     if selected_env == active:
@@ -59,7 +60,8 @@ def main():
         return
 
     config["active_environment"] = selected_env
-    with open(SDK_CONFIG_PATH, "w", encoding="utf-8") as f:
+    SDK_CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with SDK_CONFIG_PATH.open("w", encoding="utf-8") as f:
         json.dump(config, f, indent=2)
 
     print(f"\n? Entorno activo cambiado a: {selected_env}")
@@ -67,6 +69,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 
 
 

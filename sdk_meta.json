@@ -1,6 +1,6 @@
 {
   "sdk_name": "Softan Connect SDK",
-  "sdk_version": "0.0.1",
+  "sdk_version": "0.0.2",
   "sdk_type": "python",
   "sdk_author": "Softan Soluciones",
   "default_environment": "stg",
@@ -19,3 +19,4 @@
     }
   }
 }
+

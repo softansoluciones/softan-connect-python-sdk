@@ -7,12 +7,16 @@ PACKAGE_ROOT = Path(__file__).resolve().parent
 # Static metadata packaged with the SDK
 SDK_META_PATH = PACKAGE_ROOT / "sdk_meta.json"
 
+# Default location for mutable config inside the consuming project
+DEFAULT_CONFIG_DIR = Path.cwd() / "config" / "softan_connect"
+DEFAULT_CONFIG_PATH = DEFAULT_CONFIG_DIR / "sdk_config.json"
+
 # Allow overriding the config file location via env var
 _config_override = os.getenv("SOFTAN_CONNECT_CONFIG_PATH")
 if _config_override:
     SDK_CONFIG_PATH = Path(_config_override).expanduser()
 else:
-    SDK_CONFIG_PATH = Path.cwd() / "sdk_config.json"
+    SDK_CONFIG_PATH = DEFAULT_CONFIG_PATH
 
 
 def load_json(path: Path):
