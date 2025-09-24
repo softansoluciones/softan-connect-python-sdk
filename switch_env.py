@@ -1,6 +1,10 @@
 import json
 import os
-from sdk import SDK_CONFIG_PATH
+try:
+    from .sdk import SDK_CONFIG_PATH
+except ImportError:
+    from sdk import SDK_CONFIG_PATH
+
 
 
 def main():
@@ -63,4 +67,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
 

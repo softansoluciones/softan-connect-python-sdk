@@ -1,17 +1,30 @@
 import json
 import os
+from pathlib import Path
 
-# Paths (relative to project root)
-SDK_META_PATH = "sdk_meta.json"
-SDK_CONFIG_PATH = "sdk_config.json"
+PACKAGE_ROOT = Path(__file__).resolve().parent
+
+# Static metadata packaged with the SDK
+SDK_META_PATH = PACKAGE_ROOT / "sdk_meta.json"
+
+# Allow overriding the config file location via env var
+_config_override = os.getenv("SOFTAN_CONNECT_CONFIG_PATH")
+if _config_override:
+    SDK_CONFIG_PATH = Path(_config_override).expanduser()
+else:
+    SDK_CONFIG_PATH = Path.cwd() / "sdk_config.json"
 
 
-def load_json(path: str):
-    """Load JSON file, return {} if missing."""
-    if not os.path.exists(path):
+def load_json(path: Path):
+    """Load JSON file, return {} if missing or invalid."""
+    path = Path(path)
+    if not path.exists():
         return {}
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except json.JSONDecodeError:
+        return {}
 
 
 # Static metadata (SDK-owned)

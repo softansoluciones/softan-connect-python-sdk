@@ -3,7 +3,10 @@ import json
 import hashlib
 import hmac
 import time
-from sdk import SDK_META
+try:
+    from .sdk import SDK_META
+except ImportError:
+    from sdk import SDK_META
 
 
 def base64url_encode(data: bytes) -> str:
@@ -26,3 +29,4 @@ def generate_sdk_header(api_key: str, app_identifier: str):
     sig = hmac.new(api_key.encode(), payload_b64.encode(), hashlib.sha256).digest()
     sig_b64 = base64url_encode(sig)
     return f"{payload_b64}.{sig_b64}"
+
